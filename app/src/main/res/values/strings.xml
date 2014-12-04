@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name" translatable="false">Podcast Audio</string>
+    <string name="search_url" translatable="false">https://gpodder.net/search.json?q=</string>
+    <string name="popular_url" translatable="false">https://feedwrangler.net/api/v2/podcasts/popular</string>
+    <string name="categories_url" translatable="false">https://gpodder.net/api/2/tags/%d.json</string>
+    <string name="category_podcast_url" translatable="false">https://gpodder.net/api/2/tag/%d/%d.json</string>
+    <string name="podcast_info_url" translatable="false">https://gpodder.net/api/2/data/podcast.json?url=%s</string>
+    <string name="popular_url_v2" translatable="false">https://gpodder.net/toplist/%d.json?scale_logo=256</string>
+
+</resources>
