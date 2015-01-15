@@ -1,18 +1,12 @@
 package com.starstudios.podcastaudio.main;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +17,8 @@ import com.android.volley.VolleyError;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.starstudios.podcastaudio.R;
 import com.starstudios.podcastaudio.jsonparsers.MyJsonParser;
-import com.starstudios.podcastaudio.main.adapters.PodcastInfoAdapter;
-import com.starstudios.podcastaudio.main.composites.PodcastInfoComposites;
-import com.starstudios.podcastaudio.main.composites.RecentEpisode;
 import com.starstudios.podcastaudio.media.PodcastMediaPlayer;
 import com.starstudios.podcastaudio.network.NetworkFacade;
-import com.starstudios.podcastaudio.utils.RecyclerViewOnItemClickListener;
 import com.starstudios.podcastaudio.utils.Utils;
 
 import java.io.IOException;
@@ -39,15 +29,14 @@ import butterknife.InjectView;
 /**
  * Created by delgadem on 11/17/14.
  */
-public class EpisodesList extends Fragment implements Response.ErrorListener, Response.Listener {
+public class EpisodesListFragment extends Fragment implements Response.ErrorListener, Response.Listener {
 
     @InjectView(R.id.main_recycler)
     RecyclerView mRecyclerView;
 
     private String mFormattedUrl;
     private String mNodeImageUrl;
-    private String mUrl;
-    private RecentEpisode mCurrentEpisode;
+    private int mPodcastId;
     private PodcastMediaPlayer mMediaPlayer;
     private boolean mIsBound = false;
 
@@ -57,22 +46,8 @@ public class EpisodesList extends Fragment implements Response.ErrorListener, Re
     }
 
     @Override
-    public void onDetach() {
-//        if(mIsBound) {
-//            getActivity().unbindService(mMusicConnection);
-//            mMusicConnection = null;
-//        }
-
-        super.onDetach();
-    }
-
-    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-//        Intent intent = new Intent(activity, PodcastMediaPlayer.class);
-//        activity.bindService(intent, mMusicConnection, Context.BIND_AUTO_CREATE);
-//        activity.startService(intent);
     }
 
     @Override
@@ -90,8 +65,8 @@ public class EpisodesList extends Fragment implements Response.ErrorListener, Re
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mUrl = getArguments().getString(Utils.ARG_PODCAST_ID);
-        mFormattedUrl = getString(R.string.podcast_info_url, mUrl);
+        mPodcastId = getArguments().getInt(Utils.ARG_PODCAST_ID);
+        mFormattedUrl = getString(R.string.episodes_url, mPodcastId);
 //        mNodeImageUrl = getArguments().getString(Utils.ARG_IMAGE_URL);
         NetworkFacade.INSTANCE.makeGetRequest(mFormattedUrl, this, this);
     }
@@ -123,18 +98,6 @@ public class EpisodesList extends Fragment implements Response.ErrorListener, Re
         try {
             JsonNode rootNode = MyJsonParser.INSTANCE.getObjectMapper().readTree(response.toString());
             Log.d("TAG", rootNode.toString());
-//            if (rootNode.has("podcast")) {
-//                JsonNode node = rootNode.get("podcast");
-//                PodcastInfoComposites composite = (PodcastInfoComposites) MyJsonParser.INSTANCE.parseJson(node.toString(), PodcastInfoComposites.class);
-//                if(composite.recent_episodes != null) {
-//                    for(RecentEpisode episode : composite.recent_episodes) {
-//                        episode.author = composite.title;
-//                        episode.audioImage = mNodeImageUrl;
-//                    }
-//                }
-//
-//                mRecyclerView.setAdapter(new PodcastInfoAdapter(getActivity(), composite.recent_episodes, mNodeImageUrl));
-//            }
         } catch (IOException e) {
             e.printStackTrace();
         }
