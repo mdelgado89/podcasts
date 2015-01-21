@@ -22,8 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.EpisodeInfoActivity"
-            android:theme="@style/AppThemeActionBar">
+        <activity android:name=".main.EpisodeInfoActivity" >
         </activity>
         <!-- <service android:name=".media.PodcastMediaPlayer" > -->
 

@@ -1,5 +1,10 @@
 package com.starstudios.podcastaudio.media;
 
+import android.os.Looper;
+
+import com.google.android.exoplayer.ExoPlayer;
+import com.google.android.exoplayer.TrackRenderer;
+
 /**
  * Created by delgadem on 11/22/14.
  */
@@ -14,7 +19,7 @@ public class PodcastMediaPlayer /*extends Service implements MediaPlayer.OnPrepa
 //    public static final String ACTION_PREVIOUS = "action_previous";
 //    public static final String ACTION_STOP = "action_stop";
 //
-//    private MediaPlayer mMediaPlayer;
+    private ExoPlayer mMediaPlayer;
 //    private RecentEpisode mCurrentEpisode;
 //    private final MusicBinder mMusicBinder = new MusicBinder();
 //    private boolean mIsRunning = false;
@@ -25,6 +30,9 @@ public class PodcastMediaPlayer /*extends Service implements MediaPlayer.OnPrepa
 //    private MediaControllerCompat mMediaController;
 //
 //
+//    public void initializeExoPlayer() {
+//        mMediaPlayer = ExoPlayer.Factory.newInstance(0);
+//    }
 //    @Override
 //    public void onCreate() {
 //        super.onCreate();

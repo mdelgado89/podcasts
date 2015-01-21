@@ -4,3 +4,6 @@
 [submodule "volley"]
 	path = volley
 	url = https://android.googlesource.com/platform/frameworks/volley
+[submodule "ExoPlayer"]
+	path = ExoPlayer
+	url = git@github.com:google/ExoPlayer.git
